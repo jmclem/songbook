@@ -308,7 +308,16 @@ def makeDepend(sb, library, output):
     tmpl.close()
 
 def usage():
-    print "No usage information yet."
+    print "This script will generate a PDF file from a collection of song files."
+    print "The parameters for the songbook are given through a songbook file (.sb)\n"
+    print "Parameters : "
+    print "  -h, --help       : display this help"
+    print "  -s file, --songbook file"
+    print "                   : specify the songbook file to process"
+    print "  -l lib, --library=lib"
+    print "                   : specify the location of the song files"
+    print "\n"
+
 
 def main():
     locale.setlocale(locale.LC_ALL, '') # set script locale to match user's
@@ -319,6 +328,13 @@ def main():
     except getopt.GetoptError, err:
         # print help and exit
         print str(err)
+        usage()
+        sys.exit(2)
+
+    if args:
+        print "\n*** Unexpected parameters on command line\n",
+        print '    %s' % '\n'.join(map(str, args))
+        print "\n",
         usage()
         sys.exit(2)
 
