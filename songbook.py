@@ -16,6 +16,7 @@ from index import *
 from unidecode import unidecode
 from utils.plastex import parsetex
 
+
 class Song:
     #: Ordre de tri
     sort = []
@@ -306,8 +307,6 @@ def makeDepend(sb, library, output):
     idx = map(lambda x: x.replace("\getname", name), matchRegexp(indexPattern, tmpl))
     tmpl.close()
 
-    out.close()
-
 def usage():
     print "No usage information yet."
 
@@ -326,26 +325,26 @@ def main():
     sbFile = None
     library = './'
 
-    for o, a in opts:
-        if o in ("-h", "--help"):
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
             usage()
             sys.exit()
-        elif o in ("-s", "--songbook"):
-            sbFile = a
-        elif o in ("-l", "--library"):
-            if not a.endswith('/'):
-                a += '/'
-            library = a
+        elif opt in ("-s", "--songbook"):
+            sbFile = arg
+        elif opt in ("-l", "--library"):
+            if not arg.endswith('/'):
+                arg += '/'
+            library = arg
         else:
-            assert False, "unhandled option"
+            assert False, "unhandled opt"
 
     basename = os.path.basename(sbFile)[:-3]
     texFile  = basename + ".tex"
     pdfFile  = basename + ".pdf"
     
-    f = open(sbFile)
-    sb = json.load(f)
-    f.close()
+    with open(sbFile) as sb_file:
+        sb = json.load(sb_file)
+    
 
     # Make TeX file
     makeTexFile(sb, library, texFile)

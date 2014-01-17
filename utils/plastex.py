@@ -7,10 +7,12 @@ import copy
 import os
 import sys
 
+
 def simpleparse(text):
     """Parse a simple LaTeX string.
     """
     tex = TeX()
+    text = text.decode('utf8')
     tex.input(text)
     doc = tex.parse()
     return doc.textContent
