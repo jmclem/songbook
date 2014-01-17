@@ -129,6 +129,7 @@ class SongsList:
         return set().union(*[set(song.languages) for song in self.songs])
 
 def parseTemplate(template):
+    """ """ # TODO: documenter
     embeddedJsonPattern = re.compile(r"^%%:")
     f = open(template)
     code = [ line[3:-1] for line in f if embeddedJsonPattern.match(line) ]
@@ -305,12 +306,6 @@ def makeDepend(sb, library, output):
     idx = map(lambda x: x.replace("\getname", name), matchRegexp(indexPattern, tmpl))
     tmpl.close()
 
-    # write .d file
-    out = open(output, 'w')
-    out.write('{0} {1} : {2}\n'.format(output, name+".tex", ' '.join(deps)))
-    out.write('{0} : {1}\n'.format(name+".pdf", ' '.join(map(lambda x: x+".sbx",idx)+map(lambda x: library+"lilypond/"+x+".pdf", lilypond))))
-    out.write('\t$(LATEX) {0}\n'.format(name+".tex"))
-    out.write('{0} : {1}\n'.format(' '.join(map(lambda x: x+".sxd",idx)), name+".aux"))
     out.close()
 
 def usage():
